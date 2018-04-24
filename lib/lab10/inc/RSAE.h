@@ -9,7 +9,7 @@ namespace lab10 {
     class rsa_encrypt {
         //Emil's stuff!!
         unsigned generate_prime();//Fuk?
-        unsigned generate_totient(unsigned p, unsigned q);
+        unsigned generate_totient(unsigned p, unsigned q);//hello!!!
 
         unsigned generate_coprime_to_totient(unsigned totient);
         unsigned gcd(unsigned factor_1, unsigned factor_2);
