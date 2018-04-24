@@ -30,6 +30,7 @@ namespace lab10{
         //generates number between 1 and totient
         // totient and coprime can only have gcd of 1
         //use gcd function in here
+
     }
 
     unsigned rsa_encrypt::gcd(unsigned factor_1, unsigned factor_2)
@@ -69,5 +70,6 @@ bool isPrime(int num) {
         return prime;
     }
 }
+//Whasgood
 
 
