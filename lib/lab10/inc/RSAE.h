@@ -12,13 +12,14 @@ namespace lab10 {
         unsigned generate_totient(unsigned p, unsigned q);//hello!!!
 
         unsigned generate_coprime_to_totient(unsigned totient);
-        unsigned gcd(unsigned factor_1, unsigned factor_2);
+       // unsigned gcd(unsigned factor_1, unsigned factor_2);
         unsigned generate_public(unsigned totient);
         unsigned generate_private(unsigned public_key, unsigned totient);
     public:
 
         rsa_encrypt();
         ~rsa_encrypt();
+        unsigned gcd(unsigned factor_1, unsigned factor_2);
         //todo: generate keys
         //todo: encrypt message
         //todo: decrypt message
