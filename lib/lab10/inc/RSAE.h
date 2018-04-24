@@ -5,6 +5,6 @@
 #ifndef CMPE126S18_LABS_RSAE_H
 #define CMPE126S18_LABS_RSAE_H
 //hello
-//Hello From Andy;
+
 //suck a dick!
 #endif //CMPE126S18_LABS_RSAE_H
