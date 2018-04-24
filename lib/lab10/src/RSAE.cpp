@@ -45,8 +45,6 @@ namespace lab10{
         //d = prvate key
         //de mod totient = 1
     }
-
-
 }
 
 bool isPrime(int num) {
