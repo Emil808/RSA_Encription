@@ -58,7 +58,20 @@ namespace lab10 {
         //de mod totient = 1
     }
 
+    void rsa_encrypt::generate_keys() {
+        unsigned p, q, n, totient;
+        p= generate_prime();
+        q = generate_prime();
+        n = p*q;
+        totient = generate_totient(p,q);
+        unsigned e = generate_public(totient);
+        unsigned d = generate_private(e, totient);
+        std::cout <<
+    }
 
+
+
+    //auxillary
     bool isPrime(int num) {
         bool prime = true;
         if (num <= 1) {

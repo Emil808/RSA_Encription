@@ -21,6 +21,7 @@ namespace lab10 {
         ~rsa_encrypt();
         unsigned gcd(unsigned factor_1, unsigned factor_2);
         //todo: generate keys
+        void generate_keys();
         //todo: encrypt message
         //todo: decrypt message
         //I wanna do this shit strings,
