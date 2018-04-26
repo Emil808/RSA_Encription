@@ -71,7 +71,8 @@ namespace lab10{
         //todo: this
         //d*e = 1 + k*totient
         //use a random number generator to find k, can be real number
-        //d = (1 + k*totient)/e
+        //while gcd e,d != 1
+             //d = (1 + k*totient)/e
         //return d
 
 
