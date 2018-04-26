@@ -3,11 +3,7 @@
 //
 #include "gtest/gtest.h"
 #include "RSAE.h"
-TEST(RSAE,gcdTEST)
-{
-    lab10::rsa_encrypt RSA;
-    EXPECT_EQ(5,RSA.gcd(10,5));
-}
+
 class Lab10Fixture : public ::testing::Test{
 protected:
     virtual void SetUp(){
@@ -16,3 +12,10 @@ protected:
 public:
     lab10::rsa_encrypt RSA;
 };
+
+TEST_F(Lab10Fixture, prime_gcd_test){
+    unsigned a = RSA.get_prime();//problem, get_prime returns same exact number when called twice
+    unsigned b = RSA.get_prime();
+
+    EXPECT_EQ(1, RSA.find_gcd(a,b));
+}

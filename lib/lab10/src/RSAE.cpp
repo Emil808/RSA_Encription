@@ -33,7 +33,7 @@ namespace lab10 {
         // totient and coprime can only have gcd of 1
         //use gcd function in here
     }
-    //paolos comment
+
 
     unsigned rsa_encrypt::gcd(unsigned factor_1, unsigned factor_2) {
         if (factor_1 < factor_2) {
@@ -66,7 +66,6 @@ namespace lab10 {
         totient = generate_totient(p,q);
         unsigned e = generate_public(totient);
         unsigned d = generate_private(e, totient);
-        std::cout <<
     }
 
 
