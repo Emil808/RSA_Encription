@@ -8,6 +8,7 @@
 #include <random>
 #include <chrono>
 #include <fstream>
+#include <iostream>
 namespace lab10{
     bool isPrime(int num); //Auxilary function that checks if number is prime
 
@@ -68,13 +69,12 @@ namespace lab10{
         //d = prvate key
         //de mod totient = 1
 
-        //todo: this
+        //one way
         //d*e = 1 + k*totient
         //use a random number generator to find k, can be real number
         //while gcd e,d != 1
              //d = (1 + k*totient)/e
         //return d
-
 
         int quotient = 0;
         int remainder = 0; //creates two variables and initializes them to 0
@@ -116,10 +116,25 @@ namespace lab10{
         unsigned d = generate_private(e, totient);
 
         //save keys to a txt file to then share.
-
-
-
+        std::cout <<"PUBLIC KEY: " << e << "-" << n << std::endl
+                  <<"PRIVATE KEY: "<< d << "-" << n << std::endl;
     }
+
+
+    unsigned parse_key(std::string &key);
+    void rsa_encrypt::encrypt(unsigned message, std::string key) {
+        unsigned e = parse_key(key);
+        unsigned n = parse_key(key);
+
+        std::cout<< "Encrypted Message: " << (unsigned)pow(message, e) % n << std::endl;
+    };
+    void rsa_encrypt::decrypt(unsigned message, std::string key) {
+        unsigned d = parse_key(key);
+        unsigned n = parse_key(key);
+
+        std::cout << "Decrypted Message: " << (unsigned) pow(message, d) % n << std::endl;
+    };
+
 
 
 
@@ -143,6 +158,20 @@ namespace lab10{
             }
             return prime;
         }
+    }
+
+    unsigned parse_key(std::string &input){
+        unsigned key;
+
+        while(input[0] != '-' || input[0] != '\0'){
+            key = (unsigned) atoi(&input[0]);
+            input.erase(0, 1);
+        }
+        if(input[0] == '-')
+            input.erase(0,1);
+
+        return key;
+
     }
 }
 
