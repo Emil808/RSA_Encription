@@ -55,8 +55,27 @@ namespace lab10 {
     }
 
     unsigned rsa_encrypt::generate_private(unsigned public_key, unsigned totient) {
-        //d = prvate key
-        //de mod totient = 1
+        int quotient = 0;
+        int remainder = 0;
+        int originalTotient = totient;
+        int x = 1;
+        int prevX = 0;
+        int temp;
+        while(public_key!=0)
+        {
+            quotient = totient / public_key;
+            remainder = totient % public_key;
+            totient = public_key;
+            public_key = remainder;
+            temp = x;
+            x = prevX - (quotient * x);
+            prevX = temp;
+        }
+        while(prevX < 0)
+        {
+            prevX = prevX+originalTotient;
+        }
+        return prevX;
     }
 
 

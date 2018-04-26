@@ -14,7 +14,7 @@ namespace lab10 {
         unsigned generate_coprime_to_totient(unsigned totient);
        // unsigned gcd(unsigned factor_1, unsigned factor_2);
         unsigned generate_public(unsigned totient);
-        unsigned generate_private(unsigned public_key, unsigned totient);
+       // unsigned generate_private(unsigned public_key, unsigned totient);
     public:
 
         rsa_encrypt();
@@ -31,6 +31,7 @@ namespace lab10 {
 
         //functions for testing
         unsigned get_prime() {return generate_prime();};
+        unsigned generate_private(unsigned public_key, unsigned totient);
 
 
     };
