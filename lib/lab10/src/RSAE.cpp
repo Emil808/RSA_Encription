@@ -4,7 +4,9 @@
 #include "RSAE.h"
 #include <cmath>
 #include <cstdlib>
-#include <ctime>
+//#include <ctime>
+#include <random>
+#include <chrono>
 
 namespace lab10 {
     bool isPrime(int num); //Auxilary function that checks if number is prime
@@ -14,13 +16,16 @@ namespace lab10 {
     rsa_encrypt::~rsa_encrypt() {}
 
     unsigned rsa_encrypt::generate_prime() {
-        srand(time(NULL));
-        unsigned random = static_cast<unsigned int>(rand());
-        while (!isPrime(random)) {
-            srand(static_cast<unsigned int>(time(NULL)));
-            random = static_cast<unsigned int>(rand());
+        //std::srand((unsigned)time(0));
+        unsigned seed = (unsigned)std::chrono::steady_clock::now().time_since_epoch().count();//gets system time
+        std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
+        unsigned random = rd1();//calls random generator
+        while (!isPrime(random)) {//checks if number is a prime
+           // srand(static_cast<unsigned int>(time(0)));
+           // random = static_cast<unsigned int>(rand());
+            random = rd1();//if not, call random again
         }
-        return random;
+        return random;//we found a random, now return
     }
 
     unsigned rsa_encrypt::generate_totient(unsigned p, unsigned q) {
