@@ -84,7 +84,10 @@ namespace lab10{
         unsigned e = generate_public(totient);
         unsigned d = generate_private(e, totient);
 
+        //save keys to a txt file to then share.
+
         
+
     }
 
 
