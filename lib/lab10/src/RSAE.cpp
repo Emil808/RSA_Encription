@@ -7,7 +7,7 @@
 //#include <ctime>
 #include <random>
 #include <chrono>
-
+#include <fstream>
 namespace lab10{
     bool isPrime(int num); //Auxilary function that checks if number is prime
 
@@ -36,7 +36,11 @@ namespace lab10{
     unsigned rsa_encrypt::generate_coprime_to_totient(unsigned totient) {
         //generates number between 1 and totient
         // totient and coprime can only have gcd of 1
-        //use gcd function in here
+
+        //todo:this
+        //use a random number generator, bounded between 1 and the totient
+        //check e:
+            //such that gcd(e, totient) = 1;
     }
 
 
@@ -54,13 +58,21 @@ namespace lab10{
     }
 
     unsigned rsa_encrypt::generate_public(unsigned totient) {
-        //1 < e < totient
-        //such that gcd(e, totient) = 1;
+        return generate_coprime_to_totient(totient);
+        //to generate the public key
+        //it is the coprime to the totient
+
     }
 
     unsigned rsa_encrypt::generate_private(unsigned public_key, unsigned totient) {
         //d = prvate key
         //de mod totient = 1
+
+        //todo: this
+        //d*e = 1 + k*totient
+        //use a random number generator to find k, can be real number
+        //d = (1 + k*totient)/e
+        //return d
     }
 
     void rsa_encrypt::generate_keys() {
@@ -71,6 +83,8 @@ namespace lab10{
         totient = generate_totient(p,q);
         unsigned e = generate_public(totient);
         unsigned d = generate_private(e, totient);
+
+        
     }
 
 
