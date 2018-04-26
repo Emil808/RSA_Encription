@@ -62,3 +62,9 @@ TEST(RSAE, privateKeyTest)
     EXPECT_EQ(2753, RSA1.get_private(17,3120));//
     EXPECT_EQ(103, RSA1.get_private(7,120));
 }
+TEST_F(Lab10Fixture, generate_keys_test){
+    RSA.generate_keys();
+}
+TEST_F(Lab10Fixture, encrypt_message_test){
+    RSA.encrypt(69, "43-1034669421");
+}
