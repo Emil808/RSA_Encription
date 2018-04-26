@@ -29,6 +29,7 @@ namespace lab10 {
     }
 
     unsigned rsa_encrypt::generate_coprime_to_totient(unsigned totient) {
+
         //generates number between 1 and totient
         // totient and coprime can only have gcd of 1
         //use gcd function in here
