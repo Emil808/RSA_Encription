@@ -39,18 +39,11 @@ namespace lab10{
         int e=0;
         while(gcd1!=1 && e!=1 && e!=totient)
         {
-            e=rand()%(totient-2)+2;
+            e=rand()%(totient-2)+2; //this makes sure e will not be 1 or totient (1<e<totient)
             gcd1=gcd(e,totient);
         }
         return e;
 
-        //generates number between 1 and totient
-        // totient and coprime can only have gcd of 1
-
-        //todo:this
-        //use a random number generator, bounded between 1 and the totient
-        //check e:
-            //such that gcd(e, totient) = 1;
     }
 
 
