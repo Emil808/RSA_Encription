@@ -7,20 +7,20 @@
 //hello
 namespace lab10 {
     class rsa_encrypt {
-        //Emil's stuff!!
+
         unsigned generate_prime();//Fuk?
-        unsigned generate_totient(unsigned p, unsigned q);//hello!!!
+        unsigned generate_totient(unsigned p, unsigned q);
 
         unsigned generate_coprime_to_totient(unsigned totient);
-       // unsigned gcd(unsigned factor_1, unsigned factor_2);
+        unsigned gcd(unsigned factor_1, unsigned factor_2);
         unsigned generate_public(unsigned totient);
         unsigned generate_private(unsigned public_key, unsigned totient);
     public:
 
         rsa_encrypt();
         ~rsa_encrypt();
-        unsigned gcd(unsigned factor_1, unsigned factor_2);
         //todo: generate keys
+        void generate_keys();
         //todo: encrypt message
         //todo: decrypt message
         //I wanna do this shit strings,
@@ -31,7 +31,7 @@ namespace lab10 {
 
         //functions for testing
         unsigned get_prime() {return generate_prime();};
-
+        unsigned find_gcd(unsigned a, unsigned b) {return gcd(a,b);};
 
     };
 }
