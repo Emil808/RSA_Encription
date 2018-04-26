@@ -73,6 +73,36 @@ namespace lab10{
         //use a random number generator to find k, can be real number
         //d = (1 + k*totient)/e
         //return d
+
+
+        int quotient = 0;
+        int remainder = 0; //creates two variables and initializes them to 0
+        int originalTotient = totient; // originalTotient holds the totient value since it is changes in the while loop
+        int x = 1;
+        int prevX = 0;//necessary variables for Extended Euclidean Algorithm
+        int temp;
+        while(public_key!=0) // while the publice key (e) is not equal to 0, go through the loop
+        {
+            quotient = totient / public_key; // quotient holds the integer value once the totient and public key are divided
+            remainder = totient % public_key; // Since the public key is relatively prime to the totient, there will be a remainder
+            totient = public_key; //totient holds the public key value;
+            public_key = remainder; //public key is then set to hold value from remainder
+            temp = x; // temp holds the value from x, since it will be changes in the next line
+            x = prevX - (quotient * x);
+            prevX = temp;
+        }
+        //This while loop performs the Extended Euclidean Alogorithm. The main purpose of the alogrithm
+        //is to determine the modular multiplicative inverse of two coprime numbers. In our case, the totient
+        //and public key are coprime with eachother and this allows us to use this algorithm. The euclidean algorithm
+        //can be used to find the GCD of two numbers. The algoritm works by dividing repeatedly dividing the divisor
+        //by the remainder until the remainder becomes 0. The remainder before the zero-remainder is the gcd of the two
+        //numbers. By using the extended Euclidean algorithm however, we do the Euclidean algorithm in reverse order
+        //to find bezouts coefficients.
+        while(prevX < 0) // If the private key is negative
+        {
+            prevX = prevX+originalTotient; // add the totient value to the public key until it become positive
+        }
+        return prevX;
     }
 
     void rsa_encrypt::generate_keys() {
