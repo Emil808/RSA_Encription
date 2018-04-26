@@ -55,3 +55,10 @@ TEST_F(Lab10Fixture, gcd_1_test){
 TEST_F(Lab10Fixture, gcd_2_test){
     EXPECT_EQ(8, RSA.find_gcd(8, 16));
 }
+TEST(RSAE, privateKeyTest)
+{
+    lab10::rsa_encrypt RSA1;
+    EXPECT_EQ(31, RSA1.get_private(7,72)); // n = 91,
+    EXPECT_EQ(2753, RSA1.get_private(17,3120));//
+    EXPECT_EQ(103, RSA1.get_private(7,120));
+}

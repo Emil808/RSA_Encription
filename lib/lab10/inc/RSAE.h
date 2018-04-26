@@ -5,6 +5,7 @@
 #ifndef CMPE126S18_LABS_RSAE_H
 #define CMPE126S18_LABS_RSAE_H
 //hello
+#include <string>
 namespace lab10 {
     class rsa_encrypt {
 
@@ -22,6 +23,9 @@ namespace lab10 {
         //todo: generate keys
         void generate_keys();
         //todo: encrypt message
+        //whole number numerical ecryption/decryption
+        void encrypt(unsigned message, std::string key);
+        void decrypt(unsigned  message, std::string key);
         //todo: decrypt message
         //I wanna do this shit strings,
         //if can, with text files
@@ -32,6 +36,8 @@ namespace lab10 {
         //functions for testing
         unsigned get_prime() {return generate_prime();};
         unsigned find_gcd(unsigned a, unsigned b) {return gcd(a,b);};
+        unsigned get_private(unsigned public_key, unsigned totient) {return generate_private(public_key, totient); };
+
         unsigned get_coprime_to_totient(unsigned totient){ return generate_coprime_to_totient(totient);};
 
     };
