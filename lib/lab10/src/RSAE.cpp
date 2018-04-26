@@ -8,7 +8,7 @@
 #include <random>
 #include <chrono>
 
-namespace lab10 {
+namespace lab10{
     bool isPrime(int num); //Auxilary function that checks if number is prime
 
     rsa_encrypt::rsa_encrypt() {}
