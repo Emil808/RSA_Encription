@@ -38,6 +38,7 @@ namespace lab10 {
         unsigned find_gcd(unsigned a, unsigned b) {return gcd(a,b);};
         unsigned get_private(unsigned public_key, unsigned totient) {return generate_private(public_key, totient); };
 
+        unsigned get_coprime_to_totient(unsigned totient){ return generate_coprime_to_totient(totient);};
 
     };
 }
