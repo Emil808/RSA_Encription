@@ -39,6 +39,14 @@ TEST_F(Lab10Fixture, prime_4_test){
     std::cout << std::endl << "gcd( " << a << ", " << b << ") = " << RSA.find_gcd(a,b) <<std::endl;
     EXPECT_EQ(1, RSA.find_gcd(a,b));// gcd of 2 primes == 1
 }
+TEST_F(Lab10Fixture, coprimeTEST1)
+{
+    unsigned extotient=100;
+    unsigned a=RSA.get_coprime_to_totient(extotient);
+    EXPECT_TRUE(a<extotient);
+    EXPECT_TRUE(a>1);
+    EXPECT_EQ(1,RSA.find_gcd(a,extotient));
+}
 
 //gcd functionality tests
 TEST_F(Lab10Fixture, gcd_1_test){

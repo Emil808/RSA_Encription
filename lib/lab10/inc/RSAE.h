@@ -32,6 +32,7 @@ namespace lab10 {
         //functions for testing
         unsigned get_prime() {return generate_prime();};
         unsigned find_gcd(unsigned a, unsigned b) {return gcd(a,b);};
+        unsigned get_coprime_to_totient(unsigned totient){ return generate_coprime_to_totient(totient);};
 
     };
 }

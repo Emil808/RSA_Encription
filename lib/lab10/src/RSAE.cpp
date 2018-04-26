@@ -35,6 +35,15 @@ namespace lab10{
 
     unsigned rsa_encrypt::generate_coprime_to_totient(unsigned totient) {
 
+        int gcd1=0;
+        int e=0;
+        while(gcd1!=1 && e!=1 && e!=totient)
+        {
+            e=rand()%(totient-2)+2;
+            gcd1=gcd(e,totient);
+        }
+        return e;
+
         //generates number between 1 and totient
         // totient and coprime can only have gcd of 1
 
