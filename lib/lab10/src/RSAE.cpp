@@ -20,11 +20,11 @@ namespace lab10{
         //std::srand((unsigned)time(0));
         unsigned seed = (unsigned)std::chrono::steady_clock::now().time_since_epoch().count();//gets system time
         std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
-        unsigned random = rd1() % 30;//calls random generator
+        unsigned random = rd1() % 50;//calls random generator
         while (!isPrime(random)) {//checks if number is a prime
            // srand(static_cast<unsigned int>(time(0)));
            // random = static_cast<unsigned int>(rand());
-            random = rd1() % 30;//if not, call random again
+            random = rd1() % 50;//if not, call random again
         }
         return random;//we found a random, now return
     }
@@ -114,7 +114,7 @@ namespace lab10{
 
     void rsa_encrypt::generate_keys() {
         unsigned p, q, n, totient;
-        p= generate_prime();
+        p = generate_prime();
         q = generate_prime();
         n = p*q;
         totient = generate_totient(p,q);
@@ -131,14 +131,14 @@ namespace lab10{
     void rsa_encrypt::encrypt(long double message, std::string key) {
         long double e = parse_key(key);
         long double n = parse_key(key);
-        long double encrypted = pow(message, e);
+        long double encrypted = powl(message, e);
         encrypted = fmodl(encrypted, n);
         std::cout<< "Encrypted Message: "  << encrypted << std::endl;
     };
     void rsa_encrypt::decrypt(long double message, std::string key) {
         long double d = parse_key(key);
         long double n = parse_key(key);
-        long double encrypted = pow(message, d);
+        long double encrypted = powl(message, d);
         encrypted = fmodl(encrypted, n);
         std::cout << "Decrypted Message: " << encrypted << std::endl;
     };
