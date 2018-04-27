@@ -67,5 +67,8 @@ TEST_F(Lab10Fixture, generate_keys_test){
     RSA.generate_keys();
 }
 TEST_F(Lab10Fixture, encrypt_message_test){
-    RSA.encrypt(69, "43-1034669421");
+    RSA.encrypt(69, "11-57");
+}
+TEST_F(Lab10Fixture, decrypt_message_test){
+    RSA.decrypt(2, "23-57");
 }

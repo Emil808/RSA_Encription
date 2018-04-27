@@ -25,7 +25,7 @@ namespace lab10 {
         //todo: encrypt message
         //whole number numerical ecryption/decryption
         void encrypt(unsigned message, std::string key);
-        void decrypt(unsigned  message, std::string key);
+        void decrypt(double  message, std::string key);
         //todo: decrypt message
         //I wanna do this shit strings,
         //if can, with text files
