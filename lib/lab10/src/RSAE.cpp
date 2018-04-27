@@ -132,7 +132,7 @@ namespace lab10{
         unsigned e = parse_key(key);
         double n = parse_key(key);
         double encrypted = pow(message, e);
-        encrypted= std::fmod(encrypted, n);
+        encrypted= std::fmod(encrypted, n); //todo: fix this to give correct
 
         std::cout<< "Encrypted Message: "  << encrypted << std::endl;
     };
