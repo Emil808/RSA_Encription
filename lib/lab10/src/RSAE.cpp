@@ -20,11 +20,11 @@ namespace lab10{
         //std::srand((unsigned)time(0));
         unsigned seed = (unsigned)std::chrono::steady_clock::now().time_since_epoch().count();//gets system time
         std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
-        unsigned random = rd1();//calls random generator
+        unsigned random = rd1()%100+1;//calls random generator
         while (!isPrime(random)) {//checks if number is a prime
            // srand(static_cast<unsigned int>(time(0)));
            // random = static_cast<unsigned int>(rand());
-            random = rd1();//if not, call random again
+            random = rd1()%100+1;//if not, call random again
         }
         return random;//we found a random, now return
     }
@@ -50,7 +50,6 @@ namespace lab10{
 
     }
 
-
     unsigned rsa_encrypt::gcd(unsigned factor_1, unsigned factor_2) {
         if (factor_1 < factor_2) {
             unsigned temp = factor_1;
@@ -72,15 +71,6 @@ namespace lab10{
     }
 
     unsigned rsa_encrypt::generate_private(unsigned public_key, unsigned totient) {
-        //d = prvate key
-        //de mod totient = 1
-
-        //one way
-        //d*e = 1 + k*totient
-        //use a random number generator to find k, can be real number
-        //while gcd e,d != 1
-             //d = (1 + k*totient)/e
-        //return d
 
         int quotient = 0;
         int remainder = 0; //creates two variables and initializes them to 0
@@ -140,8 +130,37 @@ namespace lab10{
 
         std::cout << "Decrypted Message: " << (unsigned) pow(message, d) % n << std::endl;
     };
+    std::string encrypt_strings(std::string &input,unsigned e,unsigned n){
+        std::string encrypted_string;
+        int tempint=0,encrypted_int=0;
+        char encrypted_char;
+        char current_char;
+        while(input[0]!='\0')
+        {
+            current_char=input[0];
+            tempint=(int) current_char;
+            encrypted_int=pow(tempint, e); //change temp int to a new int value
+            encrypted_int=remainder(encrypted_int,n);
+            int ascii=encrypted_int%128;
+            encrypted_char=(char)ascii;// changes new int value to a new char
+            encrypted_string.push_back(encrypted_char); //puts to encrypted string
+            input.erase(0,1);
+        }
+        return encrypted_string;
 
+    }
+    void rsa_encrypt::encrypt(std::string message, unsigned e, unsigned n) {
+        //unsigned e = parse_key(key);
+        //unsigned n = parse_key(key);
+        message=encrypt_strings(message,e,n);
+        std::cout<< "Encrypted Message: " << message << std::endl;
+    };
+    /*void rsa_encrypt::decrypt(std::string message, std::string key) {
+        unsigned d = parse_key(key);
+        unsigned n = parse_key(key);
 
+        std::cout << "Decrypted Message: " << (unsigned) pow(message, d) % n << std::endl;
+    };*/
 
 
     //auxillary
@@ -180,5 +199,4 @@ namespace lab10{
 
     }
 }
-
 
