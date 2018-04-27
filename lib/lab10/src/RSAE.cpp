@@ -42,8 +42,8 @@ namespace lab10{
         {
             unsigned seed = (unsigned)std::chrono::steady_clock::now().time_since_epoch().count();//gets system time
             std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
-            unsigned random = rd1();//calls random generator
-            e=random%(totient-2)+2; //this makes sure e will not be 1 or totient (1<e<totient)
+            unsigned random = rd1() % totient;//calls random generator
+            e = random;
             gcd1=gcd(e,totient);
         }
         return e;
