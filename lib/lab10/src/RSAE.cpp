@@ -129,11 +129,12 @@ namespace lab10{
 
     unsigned parse_key(std::string &key);
     void rsa_encrypt::encrypt(unsigned message, std::string key) {
-        double e = parse_key(key);
+        unsigned e = parse_key(key);
         double n = parse_key(key);
         double encrypted = pow(message, e);
+        encrypted= std::fmod(encrypted, n);
 
-        std::cout<< "Encrypted Message: " << remainder(encrypted, n) << std::endl;
+        std::cout<< "Encrypted Message: "  << encrypted << std::endl;
     };
     void rsa_encrypt::decrypt(double message, std::string key) {
         double d = parse_key(key);
