@@ -34,6 +34,7 @@ namespace lab10{
         return totient;
     }
 
+    //todo:confirm correct key generation
     unsigned rsa_encrypt::generate_coprime_to_totient(unsigned totient) {
 
         int gcd1=0;
