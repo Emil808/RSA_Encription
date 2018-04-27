@@ -90,7 +90,4 @@ TEST(Power_tirals, test1){
 }
 TEST(Power_trials, test2){
     double result = fmod(pow(42, 85),323);
-
-
-
 }
