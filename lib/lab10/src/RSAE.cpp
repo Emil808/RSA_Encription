@@ -20,11 +20,11 @@ namespace lab10{
         //std::srand((unsigned)time(0));
         unsigned seed = (unsigned)std::chrono::steady_clock::now().time_since_epoch().count();//gets system time
         std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
-        unsigned random = rd1() % 40;//calls random generator
+        unsigned random = rd1() % 30;//calls random generator
         while (!isPrime(random)) {//checks if number is a prime
            // srand(static_cast<unsigned int>(time(0)));
            // random = static_cast<unsigned int>(rand());
-            random = rd1() % 40;//if not, call random again
+            random = rd1() % 30;//if not, call random again
         }
         return random;//we found a random, now return
     }
@@ -127,21 +127,20 @@ namespace lab10{
     }
 
 
-    unsigned parse_key(std::string &key);
-    void rsa_encrypt::encrypt(unsigned message, std::string key) {
-        unsigned e = parse_key(key);
-        double n = parse_key(key);
-        double encrypted = pow(message, e);
-        encrypted= std::fmod(encrypted, n); //todo: fix this to give correct
-
+    long double parse_key(std::string &key);
+    void rsa_encrypt::encrypt(long double message, std::string key) {
+        long double e = parse_key(key);
+        long double n = parse_key(key);
+        long double encrypted = pow(message, e);
+        encrypted = fmodl(encrypted, n);
         std::cout<< "Encrypted Message: "  << encrypted << std::endl;
     };
-    void rsa_encrypt::decrypt(double message, std::string key) {
-        double d = parse_key(key);
-        double n = parse_key(key);
-        double encrypted = pow(message, d);
-
-        std::cout << "Decrypted Message: " << remainder(encrypted, n) << std::endl;
+    void rsa_encrypt::decrypt(long double message, std::string key) {
+        long double d = parse_key(key);
+        long double n = parse_key(key);
+        long double encrypted = pow(message, d);
+        encrypted = fmodl(encrypted, n);
+        std::cout << "Decrypted Message: " << encrypted << std::endl;
     };
 
 
@@ -169,7 +168,7 @@ namespace lab10{
         }
     }
 
-    unsigned parse_key(std::string &input){
+    long double parse_key(std::string &input){
         std::string key_string;
 
         while(isdigit(input[0]) && input[0] != '\0'){
@@ -179,7 +178,7 @@ namespace lab10{
         if(input[0] == '-')
             input.erase(0,1);
 
-        unsigned key = atoi(key_string.c_str());
+        long double key = atoi(key_string.c_str());
         return key;
 
     }

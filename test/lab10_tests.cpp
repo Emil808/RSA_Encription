@@ -3,6 +3,7 @@
 //
 #include "gtest/gtest.h"
 #include "RSAE.h"
+#include <math.h>
 
 class Lab10Fixture : public ::testing::Test{
 protected:
@@ -67,8 +68,29 @@ TEST_F(Lab10Fixture, generate_keys_test){
     RSA.generate_keys();
 }
 TEST_F(Lab10Fixture, encrypt_message_test){
-    RSA.encrypt(42, "85-323");
+    RSA.encrypt(42, "71-121");
+
+
 }
 TEST_F(Lab10Fixture, decrypt_message_test){
-    RSA.decrypt(2, "61-323");
+    RSA.decrypt(110, "31-121");
+}
+
+TEST(Modulo_trials, test1){
+    double result = remainder(4, 8);
+    EXPECT_EQ(4, result);
+}
+TEST(Modulo_trials, test2){
+    double result = remainder(12, 5 );
+    EXPECT_EQ(2, result);
+}
+TEST(Power_tirals, test1){
+    double result = pow(4, 6);
+    EXPECT_EQ(4096, result);
+}
+TEST(Power_trials, test2){
+    double result = fmod(pow(42, 85),323);
+
+
+
 }
