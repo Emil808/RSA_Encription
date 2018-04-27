@@ -49,6 +49,7 @@ namespace lab10{
     }
 
     unsigned rsa_encrypt::generate_public(unsigned totient) {
+
         //1 < e < totient
         //such that gcd(e, totient) = 1;
     }
