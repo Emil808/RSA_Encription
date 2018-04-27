@@ -47,6 +47,7 @@ TEST_F(Lab10Fixture, coprimeTEST1)
     EXPECT_TRUE(a>1);
     EXPECT_EQ(1,RSA.find_gcd(a,extotient));
 }
+//TEST_F(Lab10Fixture)
 
 //gcd functionality tests
 TEST_F(Lab10Fixture, gcd_1_test){
