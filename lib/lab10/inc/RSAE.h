@@ -9,7 +9,10 @@
 namespace lab10 {
     class rsa_encrypt {
 
-        unsigned generate_prime();//Fuk?
+        long double exp_by_squ(long double base, unsigned expo); //exponentiation by squaring
+        long double modulo_expo(long double message, unsigned e, unsigned n); //modular exponentiation, does message^e % n
+
+        unsigned generate_prime();
         unsigned generate_totient(unsigned p, unsigned q);
 
         unsigned generate_coprime_to_totient(unsigned totient);

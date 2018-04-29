@@ -68,12 +68,12 @@ TEST_F(Lab10Fixture, generate_keys_test){
     RSA.generate_keys();
 }
 TEST_F(Lab10Fixture, encrypt_message_test){
-    RSA.encrypt(42, "23-377");
+    RSA.encrypt(42, "39-1357");
 
 
 }
 TEST_F(Lab10Fixture, decrypt_message_test){
-    RSA.decrypt(84, "263-377");
+    RSA.decrypt(1286, "1047-1357");
 }
 
 TEST(Modulo_trials, test1){

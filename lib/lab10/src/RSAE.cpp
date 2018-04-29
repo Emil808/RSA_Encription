@@ -20,11 +20,11 @@ namespace lab10{
         //std::srand((unsigned)time(0));
         unsigned seed = (unsigned)std::chrono::steady_clock::now().time_since_epoch().count();//gets system time
         std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
-        unsigned random = rd1() % 50;//calls random generator
+        unsigned random = rd1() % 100;//calls random generator
         while (!isPrime(random)) {//checks if number is a prime
            // srand(static_cast<unsigned int>(time(0)));
            // random = static_cast<unsigned int>(rand());
-            random = rd1() % 50;//if not, call random again
+            random = rd1() % 100;//if not, call random again
         }
         return random;//we found a random, now return
     }
@@ -83,6 +83,19 @@ namespace lab10{
              //d = (1 + k*totient)/e
         //return d
 
+        //Emil's way
+        /*
+        unsigned d;
+        unsigned k = 0;
+        do{
+            ++k;
+            d = (1+ k*totient) / public_key;
+        }while( (d*public_key % totient) != 1);
+        return d;
+
+*/
+        //andy's implementation
+
         int quotient = 0;
         int remainder = 0; //creates two variables and initializes them to 0
         int originalTotient = totient; // originalTotient holds the totient value since it is changes in the while loop
@@ -111,8 +124,30 @@ namespace lab10{
             prevX = prevX+originalTotient; // add the totient value to the public key until it become positive
         }
         return prevX;
+
     }
 
+    long double rsa_encrypt::exp_by_squ(long double base, unsigned expo){
+        if(expo < 0) return exp_by_squ(1 / base, -expo);
+        else if (expo == 0) return  1;
+        else if (expo == 1) return  base;
+        else if (expo % 2 == 0) return exp_by_squ(base * base,  expo / 2);
+        else if (expo % 2 != 0) return base * exp_by_squ(base * base, (expo - 1) / 2);
+    }
+
+    long double rsa_encrypt::modulo_expo(long double message, unsigned e, unsigned n){
+        if (n == 1) return 0;
+        //Assert :: (modulus - 1) * (modulus - 1) does not overflow base
+        long double result = 1;
+        message = fmodl(message, n);
+        while (e > 0) {
+            if (e % 2 == 1)
+                result = fmodl((result * message),n);
+            e = e >> 1;
+            message = fmodl((message * message),n);
+        }
+        return result;
+    }
     void rsa_encrypt::generate_keys() {
         unsigned p, q, n, totient;
         p = generate_prime();
@@ -132,15 +167,17 @@ namespace lab10{
     void rsa_encrypt::encrypt(long double message, std::string key) {
         long double e = parse_key(key);
         long double n = parse_key(key);
-        long double encrypted = powl(message, e);
-        encrypted = fmodl(encrypted, n);
+//        long double encrypted = exp_by_squ(message, e);
+//        encrypted = fmodl(encrypted, n);
+        long double encrypted = modulo_expo(message, e, n);
         std::cout<< "Encrypted Message: "  << encrypted << std::endl;
     };
     void rsa_encrypt::decrypt(long double message, std::string key) {
         long double d = parse_key(key);
         long double n = parse_key(key);
-        long double encrypted = powl(message, d);
-        encrypted = fmodl(encrypted, n);
+//        long double encrypted = exp_by_squ(message, d);
+//        encrypted = fmodl(encrypted, n);
+        long double encrypted = modulo_expo(message, d, n);
         std::cout << "Decrypted Message: " << encrypted << std::endl;
     };
 
