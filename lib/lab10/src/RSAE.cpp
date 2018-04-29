@@ -113,6 +113,21 @@ namespace lab10{
         return result;
     }
 
+    char rsa_encrypt::modulo_expo(char message, unsigned e, unsigned n){
+        if (n == 1) return 0;
+        //Assert :: (modulus - 1) * (modulus - 1) does not overflow base
+        long double encrypted_char = (long double) message;
+
+        long double result = 1;
+        encrypted_char = fmodl(encrypted_char, n);
+        while (e > 0) {
+            if (e % 2 == 1)
+                result = fmodl((result * encrypted_char),n);
+            e = e >> 1;
+            encrypted_char = fmodl((encrypted_char * encrypted_char),n);
+        }
+        return (char) encrypted_char;
+    };
     void rsa_encrypt::generate_keys() {
         unsigned p, q, n, totient;
         p = generate_prime();
@@ -127,33 +142,46 @@ namespace lab10{
                   <<"PRIVATE KEY: "<< d << "-" << n << std::endl;
     }
 
-    long double parse_key(std::string &key);
-    void rsa_encrypt::encrypt(long double message, std::string key) {
-        long double e = parse_key(key);
-        long double n = parse_key(key);
-        long double encrypted = modulo_expo(message, e, n);
-        std::cout<< "Encrypted Message: "  << encrypted << std::endl;
-    };
-    void rsa_encrypt::decrypt(long double message, std::string key) {
-        long double d = parse_key(key);
-        long double n = parse_key(key);
-        long double encrypted = modulo_expo(message, d, n);
-        std::cout << "Decrypted Message: " << encrypted << std::endl;
-    };
 
-    void rsa_encrypt::encrypt_num(long double &message, std::string key) {
-        long double e = parse_key(key);
-        long double n = parse_key(key);
+//    void rsa_encrypt::encrypt(long double message, std::string key) {
+//        long double e = parse_key(key);
+//        long double n = parse_key(key);
+//        long double encrypted = modulo_expo(message, e, n);
+//        std::cout<< "Encrypted Message: "  << encrypted << std::endl;
+//    };
+//    void rsa_encrypt::decrypt(long double message, std::string key) {
+//        long double d = parse_key(key);
+//        long double n = parse_key(key);
+//        long double encrypted = modulo_expo(message, d, n);
+//        std::cout << "Decrypted Message: " << encrypted << std::endl;
+//    };
+
+    unsigned parse_key(std::string &key);
+    void rsa_encrypt::encrypt(long double &message, std::string key) {//numerical number encryption
+        unsigned e = parse_key(key);
+        unsigned n = parse_key(key);
         message = modulo_expo(message, e, n);
 
     };
-    void rsa_encrypt::decrypt_num(long double &message, std::string key) {
-        long double d = parse_key(key);
-        long double n = parse_key(key);
+    void rsa_encrypt::decrypt(long double &message, std::string key) {
+        unsigned d = parse_key(key);
+        unsigned n = parse_key(key);
         message = modulo_expo(message, d, n);
 
     };
 
+    void rsa_encrypt::encrypt(std::string &message, std::string key){//string encryption
+        unsigned e = parse_key(key);
+        unsigned n = parse_key(key);
+        std::string encrypted;
+        //figure this out
+
+    };
+    void rsa_encrypt::decrypt(std::string &message, std::string key){
+        unsigned d = parse_key(key);
+        unsigned n = parse_key(key);
+
+    };
 
     //auxillary
     bool isPrime(int num) {
@@ -177,7 +205,7 @@ namespace lab10{
         }
     }
 
-    long double parse_key(std::string &input){
+    unsigned parse_key(std::string &input){
         std::string key_string;
 
         while(isdigit(input[0]) && input[0] != '\0'){
@@ -187,7 +215,7 @@ namespace lab10{
         if(input[0] == '-')
             input.erase(0,1);
 
-        long double key = atoi(key_string.c_str());
+        unsigned key = atoi(key_string.c_str());
         return key;
 
     }

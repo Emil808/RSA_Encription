@@ -74,22 +74,30 @@ TEST_F(Lab10Fixture, generate_keys_test){
 //PUBLIC KEY: 48911-87341
 //PRIVATE KEY: 21791-87341
 
-//PUBLIC KEY: 68827-205099
-//PRIVATE KEY: 48923-205099
 TEST_F(Lab10Fixture, encrypt_num_test1){
     long double number = 69;
-    RSA.encrypt_num(number, "29959-64913");
+    RSA.encrypt(number, "29959-64913");
     EXPECT_TRUE(69 != number);
 
-    RSA.decrypt_num(number, "4087-64913");
+    RSA.decrypt(number, "4087-64913");
     EXPECT_EQ(69, number);
 }
 
 TEST_F(Lab10Fixture, encrypt_num_test2){
     long double number = 42;
-    RSA.encrypt_num(number, "48911-87341");
+    RSA.encrypt(number, "48911-87341");
     EXPECT_TRUE(42 != number);
 
-    RSA.decrypt_num(number, "21791-87341");
+    RSA.decrypt(number, "21791-87341");
     EXPECT_EQ(42, number);
+}
+
+//PUBLIC KEY: 68827-205099
+//PRIVATE KEY: 48923-205099
+TEST_F(Lab10Fixture, encrypt_string_test){
+    std::string message = "H";
+    RSA.encrypt(message, "68827-205099");
+
+    RSA.decrypt(message,"48923-205099");
+    EXPECT_EQ("H", message);
 }
