@@ -48,7 +48,7 @@ TEST_F(Lab10Fixture, coprimeTEST1)
     EXPECT_TRUE(a>1);
     EXPECT_EQ(1,RSA.find_gcd(a,extotient));
 }
-//TEST_F(Lab10Fixture)
+
 
 //gcd functionality tests
 TEST_F(Lab10Fixture, gcd_1_test){
@@ -65,29 +65,31 @@ TEST(RSAE, privateKeyTest)
     EXPECT_EQ(103, RSA1.get_private(7,120));
 }
 TEST_F(Lab10Fixture, generate_keys_test){
-    RSA.generate_keys();
+    EXPECT_NO_FATAL_FAILURE(RSA.generate_keys());
 }
-TEST_F(Lab10Fixture, encrypt_message_test){
-    RSA.encrypt(42, "39-1357");
+//sets of keys to test
+//PUBLIC KEY: 29959-64913
+//PRIVATE KEY: 4087-64913
 
+//PUBLIC KEY: 48911-87341
+//PRIVATE KEY: 21791-87341
 
-}
-TEST_F(Lab10Fixture, decrypt_message_test){
-    RSA.decrypt(1286, "1047-1357");
+//PUBLIC KEY: 68827-205099
+//PRIVATE KEY: 48923-205099
+TEST_F(Lab10Fixture, encrypt_num_test1){
+    long double number = 69;
+    RSA.encrypt_num(number, "29959-64913");
+    EXPECT_TRUE(69 != number);
+
+    RSA.decrypt_num(number, "4087-64913");
+    EXPECT_EQ(69, number);
 }
 
-TEST(Modulo_trials, test1){
-    double result = remainder(4, 8);
-    EXPECT_EQ(4, result);
-}
-TEST(Modulo_trials, test2){
-    double result = remainder(12, 5 );
-    EXPECT_EQ(2, result);
-}
-TEST(Power_tirals, test1){
-    double result = pow(4, 6);
-    EXPECT_EQ(4096, result);
-}
-TEST(Power_trials, test2){
-    double result = fmod(pow(42, 85),323);
+TEST_F(Lab10Fixture, encrypt_num_test2){
+    long double number = 42;
+    RSA.encrypt_num(number, "48911-87341");
+    EXPECT_TRUE(42 != number);
+
+    RSA.decrypt_num(number, "21791-87341");
+    EXPECT_EQ(42, number);
 }
