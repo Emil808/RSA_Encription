@@ -3,27 +3,23 @@
 //
 #include "RSAE.h"
 #include <cmath>
-#include <cstdlib>
-//#include <ctime>
 #include <random>
 #include <chrono>
 #include <fstream>
 #include <iostream>
 namespace lab10{
-    bool isPrime(int num); //Auxilary function that checks if number is prime
 
     rsa_encrypt::rsa_encrypt() {}
 
     rsa_encrypt::~rsa_encrypt() {}
 
+    bool isPrime(int num); //Auxilary function that checks if number is prime
     unsigned rsa_encrypt::generate_prime() {
-        //std::srand((unsigned)time(0));
+
         unsigned seed = (unsigned)std::chrono::steady_clock::now().time_since_epoch().count();//gets system time
         std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
         unsigned random = rd1() % 1000;//calls random generator
         while (!isPrime(random)) {//checks if number is a prime
-           // srand(static_cast<unsigned int>(time(0)));
-           // random = static_cast<unsigned int>(rand());
             random = rd1() % 1000;//if not, call random again
         }
         return random;//we found a random, now return
@@ -34,7 +30,6 @@ namespace lab10{
         return totient;
     }
 
-    //todo:confirm correct key generation
     unsigned rsa_encrypt::generate_coprime_to_totient(unsigned totient) {
 
         int gcd1=0;
@@ -50,8 +45,6 @@ namespace lab10{
         return e;
 
     }
-
-
     unsigned rsa_encrypt::gcd(unsigned factor_1, unsigned factor_2) {
         if (factor_1 < factor_2) {
             unsigned temp = factor_1;
@@ -73,35 +66,13 @@ namespace lab10{
     }
 
     unsigned rsa_encrypt::generate_private(unsigned public_key, unsigned totient) {
-        //d = prvate key
-        //de mod totient = 1
-
-        //one way
-        //d*e = 1 + k*totient
-        //use a random number generator to find k, can be real number
-        //while gcd e,d != 1
-             //d = (1 + k*totient)/e
-        //return d
-
-        //Emil's way
-        /*
-        unsigned d;
-        unsigned k = 0;
-        do{
-            ++k;
-            d = (1+ k*totient) / public_key;
-        }while( (d*public_key % totient) != 1);
-        return d;
-
-*/
         //andy's implementation
-
         int quotient = 0;
-        int remainder = 0; //creates two variables and initializes them to 0
+        unsigned remainder = 0; //creates two variables and initializes them to 0
         int originalTotient = totient; // originalTotient holds the totient value since it is changes in the while loop
-        int x = 1;
-        int prevX = 0;//necessary variables for Extended Euclidean Algorithm
-        int temp;
+        unsigned x = 1;
+        unsigned prevX = 0;//necessary variables for Extended Euclidean Algorithm
+        unsigned temp;
         while(public_key!=0) // while the publice key (e) is not equal to 0, go through the loop
         {
             quotient = totient / public_key; // quotient holds the integer value once the totient and public key are divided
@@ -141,6 +112,7 @@ namespace lab10{
         }
         return result;
     }
+
     void rsa_encrypt::generate_keys() {
         unsigned p, q, n, totient;
         p = generate_prime();
@@ -150,14 +122,12 @@ namespace lab10{
         unsigned e = generate_public(totient);
         unsigned d = generate_private(e, totient);
 
-        //save keys to a txt file to then share.
+        //save keys to a txt file to then share?
         std::cout <<"PUBLIC KEY: " << e << "-" << n << std::endl
                   <<"PRIVATE KEY: "<< d << "-" << n << std::endl;
     }
 
-
     long double parse_key(std::string &key);
-
     void rsa_encrypt::encrypt(long double message, std::string key) {
         long double e = parse_key(key);
         long double n = parse_key(key);

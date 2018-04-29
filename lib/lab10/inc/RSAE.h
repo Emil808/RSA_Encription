@@ -47,5 +47,5 @@ namespace lab10 {
 
     };
 }
-//suck a dick!
+
 #endif //CMPE126S18_LABS_RSAE_H
