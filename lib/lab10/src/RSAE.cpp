@@ -3,27 +3,23 @@
 //
 #include "RSAE.h"
 #include <cmath>
-#include <cstdlib>
-//#include <ctime>
 #include <random>
 #include <chrono>
 #include <fstream>
 #include <iostream>
 namespace lab10{
-    bool isPrime(int num); //Auxilary function that checks if number is prime
 
     rsa_encrypt::rsa_encrypt() {}
 
     rsa_encrypt::~rsa_encrypt() {}
 
+    bool isPrime(int num); //Auxilary function that checks if number is prime
     unsigned rsa_encrypt::generate_prime() {
-        //std::srand((unsigned)time(0));
+
         unsigned seed = (unsigned)std::chrono::steady_clock::now().time_since_epoch().count();//gets system time
         std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
         unsigned random = rd1() % 1000;//calls random generator
         while (!isPrime(random)) {//checks if number is a prime
-           // srand(static_cast<unsigned int>(time(0)));
-           // random = static_cast<unsigned int>(rand());
             random = rd1() % 1000;//if not, call random again
         }
         return random;//we found a random, now return
@@ -34,7 +30,6 @@ namespace lab10{
         return totient;
     }
 
-    //todo:confirm correct key generation
     unsigned rsa_encrypt::generate_coprime_to_totient(unsigned totient) {
 
         int gcd1=0;
@@ -85,13 +80,12 @@ namespace lab10{
 
 */
         //andy's implementation
-
         int quotient = 0;
-        int remainder = 0; //creates two variables and initializes them to 0
+        unsigned remainder = 0; //creates two variables and initializes them to 0
         int originalTotient = totient; // originalTotient holds the totient value since it is changes in the while loop
-        int x = 1;
-        int prevX = 0;//necessary variables for Extended Euclidean Algorithm
-        int temp;
+        unsigned x = 1;
+        unsigned prevX = 0;//necessary variables for Extended Euclidean Algorithm
+        unsigned temp;
         while(public_key!=0) // while the publice key (e) is not equal to 0, go through the loop
         {
             quotient = totient / public_key; // quotient holds the integer value once the totient and public key are divided
@@ -131,6 +125,22 @@ namespace lab10{
         }
         return result;
     }
+
+    long double rsa_encrypt::modulo_expo(char message, unsigned e, unsigned n){
+        if (n == 1) return 0;
+        //Assert :: (modulus - 1) * (modulus - 1) does not overflow base
+        long double encrypted_char = (long double) message;
+
+        long double result = 1;
+        encrypted_char = fmodl(encrypted_char, n);
+        while (e > 0) {
+            if (e % 2 == 1)
+                result = fmodl((result * encrypted_char),n);
+            e = e >> 1;
+            encrypted_char = fmodl((encrypted_char * encrypted_char),n);
+        }
+        return encrypted_char;
+    };
     void rsa_encrypt::generate_keys() {
         unsigned p, q, n, totient;
         p = generate_prime();
@@ -140,40 +150,61 @@ namespace lab10{
         unsigned e = generate_public(totient);
         unsigned d = generate_private(e, totient);
 
-        //save keys to a txt file to then share.
+        //save keys to a txt file to then share?
         std::cout <<"PUBLIC KEY: " << e << "-" << n << std::endl
                   <<"PRIVATE KEY: "<< d << "-" << n << std::endl;
     }
 
 
-    long double parse_key(std::string &key);
+//    void rsa_encrypt::encrypt(long double message, std::string key) {
+//        long double e = parse_key(key);
+//        long double n = parse_key(key);
+//        long double encrypted = modulo_expo(message, e, n);
+//        std::cout<< "Encrypted Message: "  << encrypted << std::endl;
+//    };
+//    void rsa_encrypt::decrypt(long double message, std::string key) {
+//        long double d = parse_key(key);
+//        long double n = parse_key(key);
+//        long double encrypted = modulo_expo(message, d, n);
+//        std::cout << "Decrypted Message: " << encrypted << std::endl;
+//    };
 
-    void rsa_encrypt::encrypt(long double message, std::string key) {
-        long double e = parse_key(key);
-        long double n = parse_key(key);
-        long double encrypted = modulo_expo(message, e, n);
-        std::cout<< "Encrypted Message: "  << encrypted << std::endl;
-    };
-    void rsa_encrypt::decrypt(long double message, std::string key) {
-        long double d = parse_key(key);
-        long double n = parse_key(key);
-        long double encrypted = modulo_expo(message, d, n);
-        std::cout << "Decrypted Message: " << encrypted << std::endl;
-    };
-
-    void rsa_encrypt::encrypt_num(long double &message, std::string key) {
-        long double e = parse_key(key);
-        long double n = parse_key(key);
+    unsigned parse_key(std::string &key);
+    void rsa_encrypt::encrypt(long double &message, std::string key) {//numerical number encryption
+        unsigned e = parse_key(key);
+        unsigned n = parse_key(key);
         message = modulo_expo(message, e, n);
 
     };
-    void rsa_encrypt::decrypt_num(long double &message, std::string key) {
-        long double d = parse_key(key);
-        long double n = parse_key(key);
+    void rsa_encrypt::decrypt(long double &message, std::string key) {
+        unsigned d = parse_key(key);
+        unsigned n = parse_key(key);
         message = modulo_expo(message, d, n);
 
     };
 
+    std::vector<long double> rsa_encrypt::encrypt(std::string &message, std::string key){
+    //string encryption
+
+        unsigned e = parse_key(key);
+        unsigned n = parse_key(key);
+        std::vector<long double> encrypted_message;
+        for(int i = 0; i <message.size(); ++i){
+            encrypted_message.push_back(modulo_expo(message[i], e, n));
+        }
+        return encrypted_message;
+
+    };
+    std::string rsa_encrypt::decrypt(std::vector<long double> &encrypted_message, std::string key){
+        unsigned d = parse_key(key);
+        unsigned n = parse_key(key);
+        std::string message;
+        message = (modulo_expo(encrypted_message[0], d, n));
+        for(int i = 1; i <encrypted_message.size(); i++){
+            message.push_back(modulo_expo(encrypted_message[i], d, n));
+        }
+        return message;
+    };
 
     //auxillary
     bool isPrime(int num) {
@@ -197,7 +228,7 @@ namespace lab10{
         }
     }
 
-    long double parse_key(std::string &input){
+    unsigned parse_key(std::string &input){
         std::string key_string;
 
         while(isdigit(input[0]) && input[0] != '\0'){
@@ -207,7 +238,7 @@ namespace lab10{
         if(input[0] == '-')
             input.erase(0,1);
 
-        long double key = atoi(key_string.c_str());
+        unsigned key = atoi(key_string.c_str());
         return key;
 
     }

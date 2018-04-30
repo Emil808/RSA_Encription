@@ -6,12 +6,13 @@
 #define CMPE126S18_LABS_RSAE_H
 //hello
 #include <string>
+#include <vector>
 namespace lab10 {
     class rsa_encrypt {
 
 
         long double modulo_expo(long double message, unsigned e, unsigned n); //modular exponentiation, does message^e % n
-
+        long double modulo_expo(char message, unsigned e, unsigned n);
         unsigned generate_prime();
         unsigned generate_totient(unsigned p, unsigned q);
 
@@ -27,11 +28,14 @@ namespace lab10 {
         void generate_keys();
 
         //whole number numerical ecryption/decryption
-        void encrypt(long double message, std::string key);
-        void decrypt(long double  message, std::string key);
+//        void encrypt(long double message, std::string key);
+//        void decrypt(long double  message, std::string key);
 
-        void encrypt_num(long double &message, std::string key);
-        void decrypt_num(long double &message, std::string key);
+        void encrypt(long double &message, std::string key);
+        void decrypt(long double &message, std::string key);
+
+        std::vector<long double> encrypt(std::string &message, std::string key);
+        std::string decrypt(std::vector<long double> &encrypted_message, std::string key);
         //I wanna do this shit strings,
         //if can, with text files
         //if can, with image files
@@ -47,5 +51,5 @@ namespace lab10 {
 
     };
 }
-//suck a dick!
+
 #endif //CMPE126S18_LABS_RSAE_H
