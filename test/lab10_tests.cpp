@@ -15,7 +15,6 @@ public:
 };
 
 //generate prime functionality tests
-//notice when running multiple times will result in different numbers each time!!
 TEST_F(Lab10Fixture, prime_gcd_test){
     unsigned a = RSA.get_prime();
     unsigned b = RSA.get_prime();
@@ -92,14 +91,14 @@ TEST_F(Lab10Fixture, encrypt_num_test2){
     EXPECT_EQ(42, number);
 }
 
-//PUBLIC KEY: 68827-205099
-//PRIVATE KEY: 48923-205099
+//PUBLIC KEY: 28679-55387
+//PRIVATE KEY: 4294944375-55387
 TEST_F(Lab10Fixture, encrypt_string_test){
     std::string message = "H";
-    std::vector<long double> encrypted_message = RSA.encrypt(message, "68827-205099");
+    std::vector<long double> encrypted_message = RSA.encrypt(message, "28679-55387");
 
     message = '\0';
     EXPECT_TRUE( message != "H");
-    message = RSA.decrypt(encrypted_message,"48923-205099");
+    message = RSA.decrypt(encrypted_message,"4294944375-55387");
     EXPECT_EQ("H", message);
 }
