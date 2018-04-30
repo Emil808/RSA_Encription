@@ -96,8 +96,10 @@ TEST_F(Lab10Fixture, encrypt_num_test2){
 //PRIVATE KEY: 48923-205099
 TEST_F(Lab10Fixture, encrypt_string_test){
     std::string message = "H";
-    RSA.encrypt(message, "68827-205099");
+    std::vector<long double> encrypted_message = RSA.encrypt(message, "68827-205099");
 
-    RSA.decrypt(message,"48923-205099");
+    message = '\0';
+    EXPECT_TRUE( message != "H");
+    message = RSA.decrypt(encrypted_message,"48923-205099");
     EXPECT_EQ("H", message);
 }
