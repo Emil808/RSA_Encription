@@ -20,11 +20,11 @@ namespace lab10{
         //std::srand((unsigned)time(0));
         unsigned seed = (unsigned)std::chrono::steady_clock::now().time_since_epoch().count();//gets system time
         std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
-        unsigned random = rd1()%100+1;//calls random generator
+        unsigned random = rd1() % 40;//calls random generator
         while (!isPrime(random)) {//checks if number is a prime
            // srand(static_cast<unsigned int>(time(0)));
            // random = static_cast<unsigned int>(rand());
-            random = rd1()%100+1;//if not, call random again
+            random = rd1() % 40;//if not, call random again
         }
         return random;//we found a random, now return
     }
@@ -119,16 +119,18 @@ namespace lab10{
 
     unsigned parse_key(std::string &key);
     void rsa_encrypt::encrypt(unsigned message, std::string key) {
-        unsigned e = parse_key(key);
-        unsigned n = parse_key(key);
+        double e = parse_key(key);
+        double n = parse_key(key);
+        double encrypted = pow(message, e);
 
-        std::cout<< "Encrypted Message: " << (unsigned)pow(message, e) % n << std::endl;
+        std::cout<< "Encrypted Message: " << remainder(encrypted, n) << std::endl;
     };
-    void rsa_encrypt::decrypt(unsigned message, std::string key) {
-        unsigned d = parse_key(key);
-        unsigned n = parse_key(key);
+    void rsa_encrypt::decrypt(double message, std::string key) {
+        double d = parse_key(key);
+        double n = parse_key(key);
+        double encrypted = pow(message, d);
 
-        std::cout << "Decrypted Message: " << (unsigned) pow(message, d) % n << std::endl;
+        std::cout << "Decrypted Message: " << remainder(encrypted, n) << std::endl;
     };
     std::string encrypt_strings(std::string &input,unsigned e,unsigned n){
         std::string encrypted_string;
@@ -186,15 +188,16 @@ namespace lab10{
     }
 
     unsigned parse_key(std::string &input){
-        unsigned key;
+        std::string key_string;
 
-        while(input[0] != '-' || input[0] != '\0'){
-            key = (unsigned) atoi(&input[0]);
+        while(isdigit(input[0]) && input[0] != '\0'){
+            key_string.push_back(input[0]);
             input.erase(0, 1);
         }
         if(input[0] == '-')
             input.erase(0,1);
 
+        unsigned key = atoi(key_string.c_str());
         return key;
 
     }
