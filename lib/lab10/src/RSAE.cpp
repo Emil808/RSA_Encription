@@ -20,11 +20,11 @@ namespace lab10{
         //std::srand((unsigned)time(0));
         unsigned seed = (unsigned)std::chrono::steady_clock::now().time_since_epoch().count();//gets system time
         std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
-        unsigned random = rd1() % 40;//calls random generator
+        unsigned random = rd1() % 20+1;//calls random generator
         while (!isPrime(random)) {//checks if number is a prime
            // srand(static_cast<unsigned int>(time(0)));
            // random = static_cast<unsigned int>(rand());
-            random = rd1() % 40;//if not, call random again
+            random = rd1() % 20+1;//if not, call random again
         }
         return random;//we found a random, now return
     }
@@ -132,19 +132,17 @@ namespace lab10{
 
         std::cout << "Decrypted Message: " << remainder(encrypted, n) << std::endl;
     };
-    std::string encrypt_strings(std::string &input,unsigned e,unsigned n){
+    std::string encrypt_strings(std::string input,double e,double n){
         std::string encrypted_string;
-        int tempint=0,encrypted_int=0;
+        long long int tempint=0,encrypted_int=0;
         char encrypted_char;
         char current_char;
         while(input[0]!='\0')
         {
             current_char=input[0];
-            tempint=(int) current_char;
+            tempint=(long long int) current_char;
             encrypted_int=pow(tempint, e); //change temp int to a new int value
-            encrypted_int=remainder(encrypted_int,n);
-            int ascii=encrypted_int%128;
-            encrypted_char=(char)ascii;// changes new int value to a new char
+            encrypted_char=(char)encrypted_int;// changes new int value to a new char
             encrypted_string.push_back(encrypted_char); //puts to encrypted string
             input.erase(0,1);
         }
@@ -157,12 +155,12 @@ namespace lab10{
         message=encrypt_strings(message,e,n);
         std::cout<< "Encrypted Message: " << message << std::endl;
     };
-    /*void rsa_encrypt::decrypt(std::string message, std::string key) {
-        unsigned d = parse_key(key);
-        unsigned n = parse_key(key);
+    void rsa_encrypt::decrypt(std::string message, std::string key) {
+        //unsigned d = parse_key(key);
+        //unsigned n = parse_key(key);
 
-        std::cout << "Decrypted Message: " << (unsigned) pow(message, d) % n << std::endl;
-    };*/
+      //  std::cout << "Decrypted Message: " << (unsigned) pow(message, d) % n << std::endl;
+    };
 
 
     //auxillary
