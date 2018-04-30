@@ -158,7 +158,7 @@ namespace lab10{
 
     };
 
-    std::vector<long double> rsa_encrypt::encrypt(std::string &message, std::string key){
+    std::vector<long double> rsa_encrypt::encrypt_c(std::string message, std::string key){
     //string encryption
 
         unsigned e = parse_key(key);
@@ -170,7 +170,7 @@ namespace lab10{
         return encrypted_message;
 
     };
-    std::string rsa_encrypt::decrypt(std::vector<long double> &encrypted_message, std::string key){
+    std::string rsa_encrypt::decrypt_c(std::vector<long double> &encrypted_message, std::string key){
         unsigned d = parse_key(key);
         unsigned n = parse_key(key);
         std::string message;
@@ -181,6 +181,18 @@ namespace lab10{
         return message;
     };
 
+
+    void rsa_encrypt::encrypt(std::string &message, std::string key){
+        unsigned e = parse_key(key);
+        unsigned n = parse_key(key);
+
+        //some encryption method to encrypt the char into a different char
+    };
+    void rsa_encrypt::decrypt(std::string &messge, std::string key){
+        unsigned e = parse_key(key);
+        unsigned n = parse_key(key);
+        //a decryption method to decrypt the messed up char to the original char
+    };
     //auxillary
     bool isPrime(int num) {
         bool prime = true;

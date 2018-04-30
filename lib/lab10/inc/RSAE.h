@@ -34,8 +34,11 @@ namespace lab10 {
         void encrypt(long double &message, std::string key);
         void decrypt(long double &message, std::string key);
 
-        std::vector<long double> encrypt(std::string &message, std::string key);
-        std::string decrypt(std::vector<long double> &encrypted_message, std::string key);
+        std::vector<long double> encrypt_c(std::string message, std::string key);
+        std::string decrypt_c(std::vector<long double> &encrypted_message, std::string key);
+
+        void encrypt(std::string &message, std::string key);
+        void decrypt(std::string &messge, std::string key);
         //I wanna do this shit strings,
         //if can, with text files
         //if can, with image files
