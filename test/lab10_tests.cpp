@@ -91,14 +91,34 @@ TEST_F(Lab10Fixture, encrypt_num_test2){
     EXPECT_EQ(42, number);
 }
 
-//PUBLIC KEY: 28679-55387
-//PRIVATE KEY: 4294944375-55387
+//PUBLIC KEY: 171983-326731
+//PRIVATE KEY: 135239-326731
 TEST_F(Lab10Fixture, encrypt_string_test){
     std::string message = "H";
-    std::vector<long double> encrypted_message = RSA.encrypt(message, "28679-55387");
+    std::vector<long double> encrypted_message = RSA.encrypt(message, "171983-326731");
 
     message = '\0';
     EXPECT_TRUE( message != "H");
-    message = RSA.decrypt(encrypted_message,"4294944375-55387");
+    message = RSA.decrypt(encrypted_message,"135239-326731");
     EXPECT_EQ("H", message);
+}
+TEST_F(Lab10Fixture, encrypt_num_test3) {
+    long double number = 72;
+    RSA.encrypt(number, "171983-326731");
+    EXPECT_TRUE(72 != number);
+
+    RSA.decrypt(number, "135239-326731");
+    EXPECT_EQ(72, number);
+}
+
+//PUBLIC KEY: 86997-507427
+//PRIVATE KEY: 88453-507427
+TEST_F(Lab10Fixture, encrypt_string_test2){
+    std::string message = "Hello world! This is a secret message!!!!!!!!!!";
+    std::vector<long double> encrypted_message = RSA.encrypt(message, "86997-507427");
+
+    message = '\0';
+    EXPECT_TRUE( message != "Hello world! This is a secret message!!!!!!!!!!");
+    message = RSA.decrypt(encrypted_message,"88453-507427");
+    EXPECT_EQ("Hello world! This is a secret message!!!!!!!!!!", message);
 }

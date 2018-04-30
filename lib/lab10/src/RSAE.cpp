@@ -98,6 +98,7 @@ namespace lab10{
 
     }
 
+    //encrypts a long double
     long double rsa_encrypt::modulo_expo(long double message, unsigned e, unsigned n){
         //this returns the result of messgae^e % n
         if (n == 1) return 0;
@@ -113,6 +114,7 @@ namespace lab10{
         return result;
     }
 
+    //encrypts a char
     long double rsa_encrypt::modulo_expo(char message, unsigned e, unsigned n){
         if (n == 1) return 0;
         //Assert :: (modulus - 1) * (modulus - 1) does not overflow base
@@ -126,7 +128,7 @@ namespace lab10{
             e = e >> 1;
             encrypted_char = fmodl((encrypted_char * encrypted_char),n);
         }
-        return encrypted_char;
+        return result;
     };
     void rsa_encrypt::generate_keys() {
         unsigned p, q, n, totient;
@@ -141,20 +143,6 @@ namespace lab10{
         std::cout <<"PUBLIC KEY: " << e << "-" << n << std::endl
                   <<"PRIVATE KEY: "<< d << "-" << n << std::endl;
     }
-
-
-//    void rsa_encrypt::encrypt(long double message, std::string key) {
-//        long double e = parse_key(key);
-//        long double n = parse_key(key);
-//        long double encrypted = modulo_expo(message, e, n);
-//        std::cout<< "Encrypted Message: "  << encrypted << std::endl;
-//    };
-//    void rsa_encrypt::decrypt(long double message, std::string key) {
-//        long double d = parse_key(key);
-//        long double n = parse_key(key);
-//        long double encrypted = modulo_expo(message, d, n);
-//        std::cout << "Decrypted Message: " << encrypted << std::endl;
-//    };
 
     unsigned parse_key(std::string &key);
     void rsa_encrypt::encrypt(long double &message, std::string key) {//numerical number encryption
