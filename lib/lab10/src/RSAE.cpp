@@ -20,11 +20,11 @@ namespace lab10{
         //std::srand((unsigned)time(0));
         unsigned seed = (unsigned)std::chrono::steady_clock::now().time_since_epoch().count();//gets system time
         std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
-        unsigned random = rd1() % 20+1;//calls random generator
+        unsigned random = rd1() % 1000;//calls random generator
         while (!isPrime(random)) {//checks if number is a prime
            // srand(static_cast<unsigned int>(time(0)));
            // random = static_cast<unsigned int>(rand());
-            random = rd1() % 20+1;//if not, call random again
+            random = rd1() % 1000;//if not, call random again
         }
         return random;//we found a random, now return
     }
@@ -34,6 +34,7 @@ namespace lab10{
         return totient;
     }
 
+    //todo:confirm correct key generation
     unsigned rsa_encrypt::generate_coprime_to_totient(unsigned totient) {
 
         int gcd1=0;
@@ -42,8 +43,8 @@ namespace lab10{
         {
             unsigned seed = (unsigned)std::chrono::steady_clock::now().time_since_epoch().count();//gets system time
             std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
-            unsigned random = rd1();//calls random generator
-            e=random%(totient-2)+2; //this makes sure e will not be 1 or totient (1<e<totient)
+            unsigned random = rd1() % totient;//calls random generator
+            e = random;
             gcd1=gcd(e,totient);
         }
         return e;
@@ -71,6 +72,19 @@ namespace lab10{
     }
 
     unsigned rsa_encrypt::generate_private(unsigned public_key, unsigned totient) {
+
+        //Emil's way
+        /*
+        unsigned d;
+        unsigned k = 0;
+        do{
+            ++k;
+            d = (1+ k*totient) / public_key;
+        }while( (d*public_key % totient) != 1);
+        return d;
+
+*/
+        //andy's implementation
 
         int quotient = 0;
         int remainder = 0; //creates two variables and initializes them to 0
@@ -100,11 +114,26 @@ namespace lab10{
             prevX = prevX+originalTotient; // add the totient value to the public key until it become positive
         }
         return prevX;
+
     }
 
+    long double rsa_encrypt::modulo_expo(long double message, unsigned e, unsigned n){
+        //this returns the result of messgae^e % n
+        if (n == 1) return 0;
+        //Assert :: (modulus - 1) * (modulus - 1) does not overflow base
+        long double result = 1;
+        message = fmodl(message, n);
+        while (e > 0) {
+            if (e % 2 == 1)
+                result = fmodl((result * message),n);
+            e = e >> 1;
+            message = fmodl((message * message),n);
+        }
+        return result;
+    }
     void rsa_encrypt::generate_keys() {
         unsigned p, q, n, totient;
-        p= generate_prime();
+        p = generate_prime();
         q = generate_prime();
         n = p*q;
         totient = generate_totient(p,q);
@@ -117,49 +146,32 @@ namespace lab10{
     }
 
 
-    unsigned parse_key(std::string &key);
-    void rsa_encrypt::encrypt(unsigned message, std::string key) {
-        double e = parse_key(key);
-        double n = parse_key(key);
-        double encrypted = pow(message, e);
+    long double parse_key(std::string &key);
 
-        std::cout<< "Encrypted Message: " << remainder(encrypted, n) << std::endl;
+    void rsa_encrypt::encrypt(long double message, std::string key) {
+        long double e = parse_key(key);
+        long double n = parse_key(key);
+        long double encrypted = modulo_expo(message, e, n);
+        std::cout<< "Encrypted Message: "  << encrypted << std::endl;
     };
-    void rsa_encrypt::decrypt(double message, std::string key) {
-        double d = parse_key(key);
-        double n = parse_key(key);
-        double encrypted = pow(message, d);
-
-        std::cout << "Decrypted Message: " << remainder(encrypted, n) << std::endl;
+    void rsa_encrypt::decrypt(long double message, std::string key) {
+        long double d = parse_key(key);
+        long double n = parse_key(key);
+        long double encrypted = modulo_expo(message, d, n);
+        std::cout << "Decrypted Message: " << encrypted << std::endl;
     };
-    std::string encrypt_strings(std::string input,double e,double n){
-        std::string encrypted_string;
-        long long int tempint=0,encrypted_int=0;
-        char encrypted_char;
-        char current_char;
-        while(input[0]!='\0')
-        {
-            current_char=input[0];
-            tempint=(long long int) current_char;
-            encrypted_int=pow(tempint, e); //change temp int to a new int value
-            encrypted_char=(char)encrypted_int;// changes new int value to a new char
-            encrypted_string.push_back(encrypted_char); //puts to encrypted string
-            input.erase(0,1);
-        }
-        return encrypted_string;
 
-    }
-    void rsa_encrypt::encrypt(std::string message, unsigned e, unsigned n) {
-        //unsigned e = parse_key(key);
-        //unsigned n = parse_key(key);
-        message=encrypt_strings(message,e,n);
-        std::cout<< "Encrypted Message: " << message << std::endl;
+    void rsa_encrypt::encrypt_num(long double &message, std::string key) {
+        long double e = parse_key(key);
+        long double n = parse_key(key);
+        message = modulo_expo(message, e, n);
+
     };
-    void rsa_encrypt::decrypt(std::string message, std::string key) {
-        //unsigned d = parse_key(key);
-        //unsigned n = parse_key(key);
+    void rsa_encrypt::decrypt_num(long double &message, std::string key) {
+        long double d = parse_key(key);
+        long double n = parse_key(key);
+        message = modulo_expo(message, d, n);
 
-      //  std::cout << "Decrypted Message: " << (unsigned) pow(message, d) % n << std::endl;
     };
 
 
@@ -185,7 +197,7 @@ namespace lab10{
         }
     }
 
-    unsigned parse_key(std::string &input){
+    long double parse_key(std::string &input){
         std::string key_string;
 
         while(isdigit(input[0]) && input[0] != '\0'){
@@ -195,7 +207,7 @@ namespace lab10{
         if(input[0] == '-')
             input.erase(0,1);
 
-        unsigned key = atoi(key_string.c_str());
+        long double key = atoi(key_string.c_str());
         return key;
 
     }

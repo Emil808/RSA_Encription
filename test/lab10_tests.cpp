@@ -3,6 +3,7 @@
 //
 #include "gtest/gtest.h"
 #include "RSAE.h"
+#include <math.h>
 
 class Lab10Fixture : public ::testing::Test{
 protected:
@@ -53,6 +54,7 @@ TEST_F(Lab10Fixture,PaolosTEST)
     RSA.encrypt("hello",13,38);
 }
 
+
 //gcd functionality tests
 TEST_F(Lab10Fixture, gcd_1_test){
     EXPECT_EQ(3, RSA.find_gcd(3, 6));
@@ -68,11 +70,33 @@ TEST(RSAE, privateKeyTest)
     EXPECT_EQ(103, RSA1.get_private(7,120));
 }
 TEST_F(Lab10Fixture, generate_keys_test){
-    RSA.generate_keys();
+    EXPECT_NO_FATAL_FAILURE(RSA.generate_keys());
 }
-TEST_F(Lab10Fixture, encrypt_message_test){
-    RSA.encrypt(69, "11-57");
+//sets of keys to test
+//PUBLIC KEY: 29959-64913
+//PRIVATE KEY: 4087-64913
+
+//PUBLIC KEY: 48911-87341
+//PRIVATE KEY: 21791-87341
+
+//PUBLIC KEY: 68827-205099
+//PRIVATE KEY: 48923-205099
+TEST_F(Lab10Fixture, encrypt_num_test1){
+    long double number = 69;
+    RSA.encrypt_num(number, "29959-64913");
+    EXPECT_TRUE(69 != number);
+
+    RSA.decrypt_num(number, "4087-64913");
+    EXPECT_EQ(69, number);
 }
 TEST_F(Lab10Fixture, decrypt_message_test){
    // RSA.decrypt(2, "23-57");
+
+TEST_F(Lab10Fixture, encrypt_num_test2){
+    long double number = 42;
+    RSA.encrypt_num(number, "48911-87341");
+    EXPECT_TRUE(42 != number);
+
+    RSA.decrypt_num(number, "21791-87341");
+    EXPECT_EQ(42, number);
 }

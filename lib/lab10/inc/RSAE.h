@@ -9,7 +9,10 @@
 namespace lab10 {
     class rsa_encrypt {
 
-        unsigned generate_prime();//Fuk?
+
+        long double modulo_expo(long double message, unsigned e, unsigned n); //modular exponentiation, does message^e % n
+
+        unsigned generate_prime();
         unsigned generate_totient(unsigned p, unsigned q);
 
         unsigned generate_coprime_to_totient(unsigned totient);
@@ -20,16 +23,15 @@ namespace lab10 {
 
         rsa_encrypt();
         ~rsa_encrypt();
-        //todo: generate keys
+
         void generate_keys();
-        //todo: encrypt message
+
         //whole number numerical ecryption/decryption
-        void encrypt(unsigned message, std::string key);
-        void decrypt(unsigned  message, std::string key);
-        void encrypt(std::string message, unsigned e, unsigned n);
-        void decrypt(std::string message, std::string key);
-        void decrypt(double  message, std::string key);
-        //todo: decrypt message
+        void encrypt(long double message, std::string key);
+        void decrypt(long double  message, std::string key);
+
+        void encrypt_num(long double &message, std::string key);
+        void decrypt_num(long double &message, std::string key);
         //I wanna do this shit strings,
         //if can, with text files
         //if can, with image files
