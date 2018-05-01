@@ -54,7 +54,7 @@ TEST_F(Lab10Fixture, gcd_1_test){
     EXPECT_EQ(3, RSA.find_gcd(3, 6));
 }
 TEST_F(Lab10Fixture, gcd_2_test){
-    EXPECT_EQ(8, RSA.find_gcd(8, 16));
+    EXPECT_EQ(1, RSA.find_gcd(15, 4));
 }
 TEST(RSAE, privateKeyTest)
 {

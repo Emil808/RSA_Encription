@@ -34,6 +34,8 @@ namespace lab10 {
         void encrypt(long double &message, std::string key);
         void decrypt(long double &message, std::string key);
 
+        //these functions, not sequre to encrypt strings
+        //rsa not meant for strings
         std::vector<long double> encrypt_c(std::string message, std::string key);
         std::string decrypt_c(std::vector<long double> &encrypted_message, std::string key);
 
