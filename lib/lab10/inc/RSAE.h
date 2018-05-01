@@ -40,11 +40,7 @@ namespace lab10 {
         std::string decrypt_c(std::vector<long double> &encrypted_message, std::string key);
         void encrypt(std::string &message, std::string key);
         void decrypt(std::string &messge, std::string key);
-        //I wanna do this shit strings,
-        //if can, with text files
-        //if can, with image files
-        //holy shit, encrypt a fucking jpeg down to its fucking bits,
-        //the give someone a fucked up jpeg, then decrypt it to get the image
+
 
         //functions for testing
         unsigned get_prime() {return generate_prime();};

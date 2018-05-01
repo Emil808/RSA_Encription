@@ -80,12 +80,14 @@ TEST_F(Lab10Fixture, encrypt_num_test1){
 }
 //PUBLIC KEY: 48911-87341
 //PRIVATE KEY: 21791-87341
+//PUBLIC KEY: 35149-62291
+//PRIVATE KEY: 23101-62291
 TEST_F(Lab10Fixture, encrypt_num_test2){
     long double number = 42;
-    RSA.encrypt(number, "48911-87341");
+    RSA.encrypt(number, "35149-62291");
     EXPECT_TRUE(42 != number);
 
-    RSA.decrypt(number, "21791-87341");
+    RSA.decrypt(number, "23101-62291");
     EXPECT_EQ(42, number);
 }
 //PUBLIC KEY: 171983-326731
