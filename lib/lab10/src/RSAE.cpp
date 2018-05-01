@@ -19,7 +19,7 @@ namespace lab10{
         std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
         unsigned random = rd1() % 500;//calls random generator
         while (!isPrime(random)) {//checks if number is a prime
-            random = rd1() % 800;//if not, call random again
+            random = rd1() % 500;//if not, call random again
         }
         return random;//return the prime
     }
@@ -67,7 +67,7 @@ namespace lab10{
 
     unsigned rsa_encrypt::generate_private(unsigned public_key, unsigned totient) {
         //andy's implementation
-        int quotient = 0;
+        long double quotient = 0;
         unsigned remainder = 0; //creates two variables and initializes them to 0
         unsigned originalTotient = totient; // originalTotient holds the totient value since it is changes in the while loop
         unsigned x = 1;

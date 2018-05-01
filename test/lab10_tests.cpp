@@ -98,50 +98,51 @@ TEST_F(Lab10Fixture, encrypt_num_test3) {
     RSA.decrypt(number, "135239-326731");
     EXPECT_EQ(72, number);
 }
-//PUBLIC KEY: 27613-40561
-//PRIVATE KEY: 1189-40561
+//PUBLIC KEY: 1307-10511
+//PRIVATE KEY: 2579-10511
 TEST_F(Lab10Fixture, encrypt_num_test4) {
     long double number = 9829;
-    RSA.encrypt(number, "27613-40561");
+    RSA.encrypt(number, "1307-10511");
     EXPECT_TRUE(9829 != number);
 
-    RSA.decrypt(number, "1189-40561");
+    RSA.decrypt(number, "2579-10511");
     EXPECT_EQ(9829, number);
 }
 TEST_F(Lab10Fixture, encrypt_num_test4_2) {
-    long double number = 98290;//fails for 5-digit number
-    RSA.encrypt(number, "27613-40561");
-    EXPECT_TRUE(98290 != number);
+    long double number = 48061;//fails for 5-digit number
+    RSA.encrypt(number, "1307-10511");
+    EXPECT_TRUE(48061 != number);
 
-    RSA.decrypt(number, "1189-40561");
-    EXPECT_EQ(98290, number);
+    RSA.decrypt(number, "2579-10511");
+    EXPECT_EQ(48061, number);
 }
-//reduced primes to bellow 100
-//PUBLIC KEY: 19-158
-//PRIVATE KEY: 37-158
-TEST_F(Lab10Fixture, encrypt_num_test5) {//what?? not even 2 digit keys???
+
+//PUBLIC KEY: 48079-260327
+//PRIVATE KEY: 162511-260327
+TEST_F(Lab10Fixture, encrypt_num_test5) {
     long double number = 98290;
-    RSA.encrypt(number, "19-158");
+    RSA.encrypt(number, "48079-260327");
     EXPECT_TRUE(98290 != number);
 
-    RSA.decrypt(number, "37-158");
+    RSA.decrypt(number, "162511-260327");
+
     EXPECT_EQ(98290, number);
 }
 TEST_F(Lab10Fixture, encrypt_num_test6) {
     long double number = 9800;
-    RSA.encrypt(number, "19-158");
+    RSA.encrypt(number, "48079-260327");
     EXPECT_TRUE(9999 != number);
 
-    RSA.decrypt(number, "37-158");
+    RSA.decrypt(number, "162511-260327");
     EXPECT_EQ(9800, number);
 }
 TEST_F(Lab10Fixture, encrypt_num_test7) {
-    long double number = 9829;
-    RSA.encrypt(number, "19-158");
-    EXPECT_TRUE(9829 != number);
+    long double number = 98297;
+    RSA.encrypt(number, "48079-260327");
+    EXPECT_TRUE(98297 != number);
 
-    RSA.decrypt(number, "37-158");
-    EXPECT_EQ(9829, number);
+    RSA.decrypt(number, "162511-260327");
+    EXPECT_EQ(98297, number);
 }
 TEST_F(Lab10Fixture, encrypt_num_test8) {//to make sure the keys work
     long double number = 9;
@@ -186,6 +187,70 @@ EXPECT_TRUE(971903 != number);
 RSA.decrypt(number, "102977-585209");
 EXPECT_EQ(971903, number);
 }
+
+//PUBLIC KEY: 164783-212521
+//PRIVATE KEY: 42847-212521
+TEST_F(Lab10Fixture, encrypt_num_test13) { // 6-digit message
+    long double number = 971903;
+    RSA.encrypt(number, "164783-212521");
+    EXPECT_TRUE(971903 != number);
+
+    RSA.decrypt(number, "42847-212521");
+    EXPECT_EQ(971903, number);
+}
+TEST_F(Lab10Fixture, encrypt_num_test14) { // 5-digit message
+    long double number = 97190;
+    RSA.encrypt(number, "164783-212521");
+    EXPECT_TRUE(97190 != number);
+
+    RSA.decrypt(number, "42847-212521");
+    EXPECT_EQ(97190, number);
+}
+TEST_F(Lab10Fixture, encrypt_num_test15) { // 5-digit message
+    long double number = 41862;
+    RSA.encrypt(number, "164783-212521");
+    EXPECT_TRUE(41862 != number);
+
+    RSA.decrypt(number, "42847-212521");
+    EXPECT_EQ(41862, number);
+}
+//PUBLIC KEY: 7335-19549
+//PRIVATE KEY: 15511-19549
+TEST_F(Lab10Fixture, encrypt_num_test16) { // 5-digit message
+    long double number = 41862;
+    RSA.encrypt(number, "7335-19549");
+    EXPECT_TRUE(41862 != number);
+
+    RSA.decrypt(number, "15511-19549");
+    EXPECT_EQ(41862, number);
+}
+TEST_F(Lab10Fixture, encrypt_num_test17) { // 4-digit message
+    long double number = 4186;
+    RSA.encrypt(number, "7335-19549");
+    EXPECT_TRUE(4186 != number);
+
+    RSA.decrypt(number, "15511-19549");
+    EXPECT_EQ(4186, number);
+}
+TEST_F(Lab10Fixture, encrypt_num_test18) { // 4-digit message
+    long double number = 9999;
+    RSA.encrypt(number, "7335-19549");
+    EXPECT_TRUE(9999 != number);
+
+    RSA.decrypt(number, "15511-19549");
+    EXPECT_EQ(9999, number);
+}
+//PUBLIC KEY: 19459-77837
+//PRIVATE KEY: 139-77837
+TEST_F(Lab10Fixture, encrypt_num_test19) { // 4-digit message
+    long double number = 5098;
+    RSA.encrypt(number, "19459-77837");
+    EXPECT_TRUE(5098 != number);
+
+    RSA.decrypt(number, "139-77837");
+    EXPECT_EQ(5098, number);
+}
+
 /*
 TEST_F(Lab10Fixture, encrypt_string_test){
     std::string message = "H";
