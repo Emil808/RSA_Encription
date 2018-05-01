@@ -5,7 +5,6 @@
 #include <cmath>
 #include <random>
 #include <chrono>
-#include <fstream>
 #include <iostream>
 namespace lab10{
 
@@ -18,11 +17,11 @@ namespace lab10{
 
         unsigned seed = (unsigned)std::chrono::steady_clock::now().time_since_epoch().count();//gets system time
         std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
-        unsigned random = rd1() % 1000;//calls random generator
+        unsigned random = rd1() % 500;//calls random generator
         while (!isPrime(random)) {//checks if number is a prime
-            random = rd1() % 1000;//if not, call random again
+            random = rd1() % 800;//if not, call random again
         }
-        return random;//we found a random, now return
+        return random;//return the prime
     }
 
     unsigned rsa_encrypt::generate_totient(unsigned p, unsigned q) {
@@ -40,12 +39,13 @@ namespace lab10{
             std::minstd_rand0 rd1(seed);//calls random method, seeds with the system time
             unsigned random = rd1() % totient;//calls random generator
             e = random;
-            gcd1=gcd(e,totient);
+            gcd1=gcd(e,totient);//checks that e and totient are coprime if gcd=1
         }
         return e;
 
     }
     unsigned rsa_encrypt::gcd(unsigned factor_1, unsigned factor_2) {
+        //eucledian algorithm
         if (factor_1 < factor_2) {
             unsigned temp = factor_1;
             factor_1 = factor_2;
@@ -69,9 +69,9 @@ namespace lab10{
         //andy's implementation
         int quotient = 0;
         unsigned remainder = 0; //creates two variables and initializes them to 0
-        int originalTotient = totient; // originalTotient holds the totient value since it is changes in the while loop
+        unsigned originalTotient = totient; // originalTotient holds the totient value since it is changes in the while loop
         unsigned x = 1;
-        unsigned prevX = 0;//necessary variables for Extended Euclidean Algorithm
+        int prevX = 0;//necessary variables for Extended Euclidean Algorithm
         unsigned temp;
         while(public_key!=0) // while the publice key (e) is not equal to 0, go through the loop
         {
@@ -98,7 +98,7 @@ namespace lab10{
 
     }
 
-    //encrypts a long double
+    //encrypts a long double number
     long double rsa_encrypt::modulo_expo(long double message, unsigned e, unsigned n){
         //this returns the result of messgae^e % n
         if (n == 1) return 0;
@@ -130,6 +130,7 @@ namespace lab10{
         }
         return result;
     };
+
     void rsa_encrypt::generate_keys() {
         unsigned p, q, n, totient;
         p = generate_prime();

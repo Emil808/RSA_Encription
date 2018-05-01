@@ -34,11 +34,10 @@ namespace lab10 {
         void encrypt(long double &message, std::string key);
         void decrypt(long double &message, std::string key);
 
-        //these functions, not sequre to encrypt strings
-        //rsa not meant for strings
+        //these functions, not secure to encrypt strings
+        //rsa not meant for strings, need to do oaep
         std::vector<long double> encrypt_c(std::string message, std::string key);
         std::string decrypt_c(std::vector<long double> &encrypted_message, std::string key);
-
         void encrypt(std::string &message, std::string key);
         void decrypt(std::string &messge, std::string key);
         //I wanna do this shit strings,
@@ -51,7 +50,6 @@ namespace lab10 {
         unsigned get_prime() {return generate_prime();};
         unsigned find_gcd(unsigned a, unsigned b) {return gcd(a,b);};
         unsigned get_private(unsigned public_key, unsigned totient) {return generate_private(public_key, totient); };
-
         unsigned get_coprime_to_totient(unsigned totient){ return generate_coprime_to_totient(totient);};
 
     };

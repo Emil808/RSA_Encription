@@ -47,8 +47,6 @@ TEST_F(Lab10Fixture, coprimeTEST1)
     EXPECT_TRUE(a>1);
     EXPECT_EQ(1,RSA.find_gcd(a,extotient));
 }
-
-
 //gcd functionality tests
 TEST_F(Lab10Fixture, gcd_1_test){
     EXPECT_EQ(3, RSA.find_gcd(3, 6));
@@ -63,16 +61,15 @@ TEST(RSAE, privateKeyTest)
     EXPECT_EQ(2753, RSA1.get_private(17,3120));//
     EXPECT_EQ(103, RSA1.get_private(7,120));
 }
+
+
+//encryption tests
 TEST_F(Lab10Fixture, generate_keys_test){
     EXPECT_NO_FATAL_FAILURE(RSA.generate_keys());
 }
 //sets of keys to test
 //PUBLIC KEY: 29959-64913
 //PRIVATE KEY: 4087-64913
-
-//PUBLIC KEY: 48911-87341
-//PRIVATE KEY: 21791-87341
-
 TEST_F(Lab10Fixture, encrypt_num_test1){
     long double number = 69;
     RSA.encrypt(number, "29959-64913");
@@ -81,7 +78,8 @@ TEST_F(Lab10Fixture, encrypt_num_test1){
     RSA.decrypt(number, "4087-64913");
     EXPECT_EQ(69, number);
 }
-
+//PUBLIC KEY: 48911-87341
+//PRIVATE KEY: 21791-87341
 TEST_F(Lab10Fixture, encrypt_num_test2){
     long double number = 42;
     RSA.encrypt(number, "48911-87341");
@@ -90,9 +88,105 @@ TEST_F(Lab10Fixture, encrypt_num_test2){
     RSA.decrypt(number, "21791-87341");
     EXPECT_EQ(42, number);
 }
-
 //PUBLIC KEY: 171983-326731
 //PRIVATE KEY: 135239-326731
+TEST_F(Lab10Fixture, encrypt_num_test3) {
+    long double number = 72;
+    RSA.encrypt(number, "171983-326731");
+    EXPECT_TRUE(72 != number);
+
+    RSA.decrypt(number, "135239-326731");
+    EXPECT_EQ(72, number);
+}
+//PUBLIC KEY: 27613-40561
+//PRIVATE KEY: 1189-40561
+TEST_F(Lab10Fixture, encrypt_num_test4) {
+    long double number = 9829;
+    RSA.encrypt(number, "27613-40561");
+    EXPECT_TRUE(9829 != number);
+
+    RSA.decrypt(number, "1189-40561");
+    EXPECT_EQ(9829, number);
+}
+TEST_F(Lab10Fixture, encrypt_num_test4_2) {
+    long double number = 98290;//fails for 5-digit number
+    RSA.encrypt(number, "27613-40561");
+    EXPECT_TRUE(98290 != number);
+
+    RSA.decrypt(number, "1189-40561");
+    EXPECT_EQ(98290, number);
+}
+//reduced primes to bellow 100
+//PUBLIC KEY: 19-158
+//PRIVATE KEY: 37-158
+TEST_F(Lab10Fixture, encrypt_num_test5) {//what?? not even 2 digit keys???
+    long double number = 98290;
+    RSA.encrypt(number, "19-158");
+    EXPECT_TRUE(98290 != number);
+
+    RSA.decrypt(number, "37-158");
+    EXPECT_EQ(98290, number);
+}
+TEST_F(Lab10Fixture, encrypt_num_test6) {
+    long double number = 9800;
+    RSA.encrypt(number, "19-158");
+    EXPECT_TRUE(9999 != number);
+
+    RSA.decrypt(number, "37-158");
+    EXPECT_EQ(9800, number);
+}
+TEST_F(Lab10Fixture, encrypt_num_test7) {
+    long double number = 9829;
+    RSA.encrypt(number, "19-158");
+    EXPECT_TRUE(9829 != number);
+
+    RSA.decrypt(number, "37-158");
+    EXPECT_EQ(9829, number);
+}
+TEST_F(Lab10Fixture, encrypt_num_test8) {//to make sure the keys work
+    long double number = 9;
+    RSA.encrypt(number, "19-158");
+    EXPECT_TRUE(9 != number);
+
+    RSA.decrypt(number, "37-158");
+    EXPECT_EQ(9, number);
+}
+//PUBLIC KEY: 236993-585209
+//PRIVATE KEY: 102977-585209
+//keys from primes bellow 500, changed some data types in generate private from int to unsigned
+TEST_F(Lab10Fixture, encrypt_num_test9) {//to make sure the keys work
+    long double number = 9;
+    RSA.encrypt(number, "236993-585209");
+    EXPECT_TRUE(9 != number);
+
+    RSA.decrypt(number, "102977-585209");
+    EXPECT_EQ(9, number);
+}
+TEST_F(Lab10Fixture, encrypt_num_test10) { // 4-digit message
+    long double number = 9819;
+    RSA.encrypt(number, "236993-585209");
+    EXPECT_TRUE(9819 != number);
+
+    RSA.decrypt(number, "102977-585209");
+    EXPECT_EQ(9819, number);
+}
+TEST_F(Lab10Fixture, encrypt_num_test11) { // 5-digit message
+    long double number = 97190;
+    RSA.encrypt(number, "236993-585209");
+    EXPECT_TRUE(97190 != number);
+
+    RSA.decrypt(number, "102977-585209");
+    EXPECT_EQ(97190, number);
+}
+TEST_F(Lab10Fixture, encrypt_num_test12) { // 6-digit message
+long double number = 971903;
+RSA.encrypt(number, "236993-585209");
+EXPECT_TRUE(971903 != number);
+
+RSA.decrypt(number, "102977-585209");
+EXPECT_EQ(971903, number);
+}
+/*
 TEST_F(Lab10Fixture, encrypt_string_test){
     std::string message = "H";
     std::vector<long double> encrypted_message = RSA.encrypt_c(message, "171983-326731");
@@ -102,17 +196,12 @@ TEST_F(Lab10Fixture, encrypt_string_test){
     message = RSA.decrypt_c(encrypted_message,"135239-326731");
     EXPECT_EQ("H", message);
 }
-TEST_F(Lab10Fixture, encrypt_num_test3) {
-    long double number = 72;
-    RSA.encrypt(number, "171983-326731");
-    EXPECT_TRUE(72 != number);
+*/
 
-    RSA.decrypt(number, "135239-326731");
-    EXPECT_EQ(72, number);
-}
 
 //PUBLIC KEY: 86997-507427
 //PRIVATE KEY: 88453-507427
+/*
 TEST_F(Lab10Fixture, encrypt_string_test2){
     std::string message = "Hello world! This is a secret message!!!!!!!!!!";
     std::vector<long double> encrypted_message = RSA.encrypt_c(message, "86997-507427");
@@ -133,3 +222,4 @@ TEST_F(Lab10Fixture, encrypt_string_test3){
     RSA.decrypt(message, "4294894739-225893");
     EXPECT_EQ("I will be changed when i become encrypted!", message);
 }
+*/
